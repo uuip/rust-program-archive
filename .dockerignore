@@ -1,0 +1,8 @@
+.*
+__pycache__
+Dockerfile
+docker
+compose.*
+# .log, .log.1
+logs/*
+target

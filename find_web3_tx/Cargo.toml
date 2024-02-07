@@ -1,0 +1,27 @@
+[package]
+name = "find_web3_tx"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+log = { workspace = true }
+env_logger = { workspace = true }
+chrono = { workspace = true }
+dotenvy = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono-tz = "0.8.5"
+anyhow = "1.0.79"
+rand = "0.8.5"
+tokio = { version = "1.35.1", features = ["full"] }
+async-channel = "2.1.1"
+reqwest = { version = "0.11.24", features = ["json", "gzip"] }
+ethers = { version = "2.0.13", default-features = false, features = ["abigen", "legacy"] }
+sqlx = { version = "0.7.3", features = ["runtime-tokio", "sqlite", "chrono"] }
+futures-util = "0.3.30"
+common = { path = "../common", features = ["web3"] }
+
+[lints]
+workspace = true
