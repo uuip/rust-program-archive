@@ -1,0 +1,19 @@
+[package]
+name = "learn_bytes"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+common = { path = "../common", features = [] }
+log = { workspace = true }
+chrono = { workspace = true }
+
+bytes = "1.5.0"
+byteorder = "1.5.0"
+
+#[lints]
+#workspace = true
+
+[lints.rust]
+#unused_imports = "allow"
+#dead_code = "allow"
