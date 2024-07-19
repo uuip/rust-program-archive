@@ -8,5 +8,5 @@ edition = "2021"
 [dependencies]
 fastrand = "2.1.0"
 rocksdb = "0.22.0"
-serde_json = "1.0.117"
-uuid = { version = "1.8.0", features = ["v4", "fast-rng"] }
+serde_json = "1.0.120"
+uuid = { version = "1.10.0", features = ["v4", "fast-rng"] }

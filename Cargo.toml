@@ -3,7 +3,7 @@ members = [
     "common",
     "find_web3_tx",
     "send_pulsar",
-    "use_rocksdb",
+#    "use_rocksdb",
 ]
 resolver = "2"
 
@@ -16,13 +16,13 @@ repository = "https://github.com/"
 license = "MIT"
 
 [workspace.dependencies]
-log = { version = "0.4.21", features = ["release_max_level_info"] }
+log = { version = "0.4.22", features = ["release_max_level_info"] }
 chrono = { version = "0.4.38", default-features = false, features = [
     "clock",
     "serde",
 ] }
-serde = { version = "1.0.201", features = ["derive"] }
-serde_json = "1.0.117"
+serde = { version = "1.0.204", features = ["derive"] }
+serde_json = "1.0.120"
 env_logger = "0.11.3"
 dotenvy = "0.15.7"
 

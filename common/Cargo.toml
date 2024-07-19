@@ -29,7 +29,7 @@ dotenvy = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 
-flexi_logger = { version = "0.28.0", optional = true }
+flexi_logger = { version = "0.28.5", optional = true }
 
 #tracing-appender = { package = "clia-tracing-appender", version = "0.2.5", optional = true }
 #time = { version = "0.3.31", features = ["formatting", "macros"] }
@@ -38,15 +38,15 @@ tracing-subscriber = { version = "0.3.18", features = ["local-time", "chrono"], 
 tracing-appender = {  version = "0.2.3", optional = true }
 tracing = { version = "0.1.40", optional = true }
 
-deadpool-postgres = { version = "0.13.2", optional = true }
+deadpool-postgres = { version = "0.14.0", optional = true }
 tokio-postgres = { version = "0.7.10", optional = true, features = [
     "with-chrono-0_4",
     "with-serde_json-1",
 ] }
 
 postgres-from-row = { version = "0.5.2", optional = true }
-strum = { version = "0.26.2", features = ["derive"], optional = true }
-serde_with = { version = "3.8.1", optional = true }
+strum = { version = "0.26.3", features = ["derive"], optional = true }
+serde_with = { version = "3.9.0", optional = true }
 num_enum = { version = "0.7.2", optional = true }
 serde_repr = { version = "0.1.19", optional = true }
 duplicate = { version = "1.0.0", optional = true }
@@ -57,8 +57,8 @@ ethers = { version = "2.0.14", default-features = false, optional = true, featur
     "openssl",
 ] }
 
-pulsar = { version = "6.2.0", default-features = false, optional = true, features = [
+pulsar = { version = "6.3.0", default-features = false, optional = true, features = [
     "tokio-runtime",
     "compression",
 ] }
-schemars = { version = "0.8.19", optional = true }
+schemars = { version = "0.8.21", optional = true }

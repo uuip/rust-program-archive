@@ -43,7 +43,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let pulsar_task = tokio::spawn(async move {
         while let Ok(msg) = pr.recv().await {
-            producer.send(msg).await?;
+            producer.send_non_blocking(msg).await?;
         }
         info!("pulsar_task exit");
         let _ = producer.send_batch().await;
