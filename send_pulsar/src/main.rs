@@ -1,14 +1,11 @@
-#![allow(unused_imports)]
-
-use std::str::FromStr;
-
 use chrono::Local;
 use ethers::abi::AbiDecode;
 use ethers::prelude::Bytes;
 use futures_util::{pin_mut, StreamExt};
 use log::info;
-use once_cell::sync::Lazy;
 use pulsar::{ProducerOptions, Pulsar, TokioExecutor};
+use std::str::FromStr;
+use std::sync::OnceLock;
 use tokio::join;
 use tokio_postgres::types::ToSql;
 use tokio_postgres::Row;
@@ -17,21 +14,22 @@ use common::erc20::Erc20TokenCalls;
 use common::schema::{Msg, PulsarSchema, TokenMessageArg};
 use common::{create_pool, init_logger, Setting};
 
-static SETTING: Lazy<Setting, fn() -> Setting> = Lazy::new(Setting::init);
+static SETTING: OnceLock<Setting> = OnceLock::new();
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let setting = SETTING.get_or_init(Setting::init);
     init_logger();
     let (ps, pr) = async_channel::unbounded::<Msg>();
-    let pool = create_pool(&SETTING.explorer_db).await;
+    let pool = create_pool(&setting.explorer_db).await;
     let now = Local::now();
 
-    let pulsar: Pulsar<TokioExecutor> = Pulsar::builder(&SETTING.pulsar_addr, TokioExecutor)
+    let pulsar: Pulsar<TokioExecutor> = Pulsar::builder(&setting.pulsar_addr, TokioExecutor)
         .build()
         .await?;
     let mut producer = pulsar
         .producer()
-        .with_topic(&SETTING.topic)
+        .with_topic(&setting.topic)
         .with_options(ProducerOptions {
             // compression: Some(Compression::Lz4(CompressionLz4::default())),
             schema: Some(Msg::pulsar_json_schema()),
