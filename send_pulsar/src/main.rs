@@ -20,7 +20,7 @@ static SETTING: OnceLock<Setting> = OnceLock::new();
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let setting = SETTING.get_or_init(Setting::init);
     init_logger();
-    let (ps, pr) = async_channel::unbounded::<Msg>();
+    let (chs, chr) = async_channel::unbounded::<Msg>();
     let pool = create_pool(&setting.explorer_db).await;
     let now = Local::now();
 
@@ -40,12 +40,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
 
     let pulsar_task = tokio::spawn(async move {
-        while let Ok(msg) = pr.recv().await {
+        while let Ok(msg) = chr.recv().await {
             producer.send_non_blocking(msg).await?;
         }
         info!("pulsar_task exit");
-        let _ = producer.send_batch().await;
-        let _ = producer.close().await;
+        producer.send_batch().await?;
+        producer.close().await?;
         Ok::<(), anyhow::Error>(())
     });
 
@@ -59,16 +59,17 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     pin_mut!(rows);
     while let Some(Ok(row)) = rows.next().await {
-        let ps = ps.clone();
+        let chs = chs.clone();
         tokio::spawn(async move {
             let msg = process(row);
             if let Ok(msg) = msg {
-                let _ = ps.send(msg).await;
+                chs.send(msg).await?;
             };
+            Ok::<(), anyhow::Error>(())
         });
     }
 
-    drop(ps);
+    drop(chs);
     let _ = join!(pulsar_task);
     info!(
         "run time: {}s",

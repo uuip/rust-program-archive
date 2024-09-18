@@ -3,7 +3,6 @@ members = [
     "common",
     "find_web3_tx",
     "send_pulsar",
-#    "use_rocksdb",
 ]
 resolver = "2"
 
