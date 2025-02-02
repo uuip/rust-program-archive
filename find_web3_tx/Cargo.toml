@@ -15,9 +15,9 @@ anyhow = "1.0.89"
 rand = "0.8.5"
 tokio = { version = "1.40.0", features = ["full"] }
 async-channel = "2.3.1"
-reqwest = { version = "=0.11.27", features = ["json", "gzip", "native-tls-alpn"] }
+reqwest = { version = "=0.11.27", features = ["json", "gzip"] }
 ethers = { version = "2.0.14", default-features = false, features = ["abigen", "legacy"] }
-sqlx = { version = "0.8.2", features = ["runtime-tokio","tls-native-tls", "sqlite", "chrono"] }
+sqlx = { version = "0.8.2", features = ["runtime-tokio", "sqlite", "chrono"] }
 futures-util = "0.3.30"
 common = { path = "../common", features = ["web3"] }
 
